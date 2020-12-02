@@ -32,7 +32,7 @@ func getInput(filename string) ([]int, error) {
 }
 
 func main() {
-	input, err := getInput("in1")
+	input, err := getInput("in")
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
