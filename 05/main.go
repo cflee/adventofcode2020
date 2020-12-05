@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 )
 
 func getInput(filename string) ([]string, error) {
@@ -31,18 +30,26 @@ func getInput(filename string) ([]string, error) {
 }
 
 func parsePass(pass string) (int, int) {
-	// not too sure why i can't do a one-pass assign to chars
-	// in the string slice so let's just do this
-	pass = strings.ReplaceAll(pass, "F", "0")
-	pass = strings.ReplaceAll(pass, "B", "1")
-	pass = strings.ReplaceAll(pass, "L", "0")
-	pass = strings.ReplaceAll(pass, "R", "1")
+	p := []byte(pass)
+	for i := 0; i < len(p); i++ {
+		switch p[i] {
+		case 'F':
+			p[i] = '0'
+		case 'B':
+			p[i] = '1'
+		case 'L':
+			p[i] = '0'
+		case 'R':
+			p[i] = '1'
+		}
+	}
+	s := string(p)
 
-	r, err := strconv.ParseInt(pass[:7], 2, 8)
+	r, err := strconv.ParseInt(s[:7], 2, 8)
 	if err != nil {
 		return 0, 0
 	}
-	c, err := strconv.ParseInt(pass[7:], 2, 8)
+	c, err := strconv.ParseInt(s[7:], 2, 8)
 	if err != nil {
 		return 0, 0
 	}
